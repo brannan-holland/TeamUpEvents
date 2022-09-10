@@ -1,5 +1,9 @@
+
+  --[[ #include "controls_siteconfig.lua" ]]
+
+
 table.insert(ctrls, {
-  Name = "SendButton",
+  Name = "Run",
   ControlType = "Button",
   ButtonType = "Momentary",
   Count = 1,
@@ -39,25 +43,9 @@ table.insert( ctrls,
   PinStyle = "Input"
 })
 
-table.insert( ctrls,
-{
-  Name = "TeamUpKey",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = 1,
-  PinStyle = "None",
-  UserPin = false
-})
 
-table.insert( ctrls,
-{
-  Name = "SiteCode",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = 1,
-  PinStyle = "None",
-  UserPin = false
-})
+
+
 
 table.insert( ctrls,
 {
@@ -78,3 +66,36 @@ table.insert( ctrls,
   PinStyle = "None",
   UserPin = false
 })
+
+table.insert( ctrls,
+{
+  Name = "EventName",       
+  ControlType = "Indicator",
+  IndicatorType = "Text",   
+  Count = 2,
+  PinStyle = "None",
+  UserPin = false
+})
+
+table.insert( ctrls,
+{
+  Name = "ProCount",       
+  ControlType = "Indicator",
+  IndicatorType = "Text",   
+  Count = 2,
+  PinStyle = "None",
+  UserPin = false
+})
+
+table.insert( ctrls,
+{
+  Name = "EventType",       
+  ControlType = "Indicator",
+  IndicatorType = "Text",   
+  Count = 2,
+  PinStyle = "None",
+  UserPin = false
+})
+
+
+

@@ -12,11 +12,11 @@ end
 
 -- The name that will initially display when dragged into a design
 function GetPrettyName(props)
-  return "TeamUp Events " .. PluginInfo.Version
+  return "TeamUp Events " .. PluginInfo.BuildVersion
 end
 
 -- Optional function used if plugin has multiple pages
-PageNames = { "Main", "Test", "About" }  --List the pages within the plugin
+PageNames = { "Main", "About", "Site" }  --List the pages within the plugin
 function GetPages(props)
   local pages = {}
   --[[ #include "pages.lua" ]]
