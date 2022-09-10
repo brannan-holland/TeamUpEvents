@@ -1,0 +1,563 @@
+-- Basic Framework Plugin
+-- by QSC
+-- October 2020
+
+-- Information block for the plugin
+PluginInfo = {
+  Name = "TeamUp Events",
+  Version = "0.3",
+  BuildVersion = "0.0.0.59",
+  Id = "a2d21813-c304-45b0-9dac-9913d998ad28",
+  Author = "Pyek Group - Brannan Holland",
+  Description = "Pulls TeamUp Events - Triggers Events"
+}
+
+-- Define the color of the plugin object in the design
+function GetColor(props)
+  return { 102, 102, 102 }
+end
+
+-- The name that will initially display when dragged into a design
+function GetPrettyName(props)
+  return "TeamUp Events " .. PluginInfo.Version
+end
+
+-- Optional function used if plugin has multiple pages
+PageNames = { "Main", "Test", "About" }  --List the pages within the plugin
+function GetPages(props)
+  local pages = {}
+  for ix,name in ipairs(PageNames) do
+    table.insert(pages, {name = PageNames[ix]})
+  end
+  return pages
+end
+
+-- Optional function to define model if plugin supports more than one model
+function GetModel(props)
+  local model = {}
+  if props.Model ~= nil and props.Model.Value ~= "" then
+    table.insert(model, { props.Model.Value } )
+  else
+    table.insert(model, { "Base Model" } )
+  end
+  
+ return model
+end
+
+-- Define User configurable Properties of the plugin
+function GetProperties()
+  local props = {}
+  table.insert(props, {
+    Name = "Debug Print",
+    Type = "enum",
+    Choices = {"None", "Tx/Rx", "Tx", "Rx", "Function Calls", "All"},
+    Value = "All"
+  })
+  
+  return props
+end
+
+-- Optional function to define pins on the plugin that are not connected to a Control
+function GetPins(props)
+  local pins = {}
+  table.insert(pins,{
+    Name = "Audio Output",
+    Direction = "output",
+  }) 
+  
+  return pins
+end
+
+-- Optional function to update available properties when properties are altered by the user
+function RectifyProperties(props)
+  if props.plugin_show_debug.Value == false then 
+    props["Debug Print"].IsHidden = true 
+  end
+  return props
+end
+
+-- Optional function to define components used within the plugin
+function GetComponents(props)
+  local components = {}
+  table.insert(components,{
+    Name = "main_mixer",
+    Type = "mixer",
+    Properties =   
+    {
+      ["n_inputs"] = 8,
+      ["n_outputs"] = 1,
+    }
+  })
+  
+  return components
+end
+
+-- Optional function to define wiring of components used within the plugin
+function GetWiring(props)
+  local wiring = {}
+  table.insert( wiring, { "Audio Output", "main_mixer Output 1" } )
+  return wiring
+end
+
+-- Defines the Controls used within the plugin
+function GetControls(props)
+  local ctrls = {}
+  table.insert(ctrls, {
+    Name = "SendButton",
+    ControlType = "Button",
+    ButtonType = "Momentary",
+    Count = 1,
+    UserPin = true,
+    PinStyle = "Input",
+    Icon = "Power"
+  })
+  table.insert(ctrls, {
+    Name = "SendButton2",
+    ControlType = "Button",
+    ButtonType = "Momentary",
+    Count = 1,
+    UserPin = true,
+    PinStyle = "Input",
+    Icon = "Power"
+  })
+  
+  
+  table.insert( ctrls,
+  {
+    Name = "Time",       
+    ControlType = "Indicator",
+    IndicatorType = "Text",   
+    Count = 1,
+    PinStyle = "None",
+    UserPin = false
+  })
+  
+  
+  
+  table.insert( ctrls,
+  {
+    Name = "PyekArray",        
+    ControlType = "Text",  
+    Count = 1,
+    UserPin = true,
+    PinStyle = "Input"
+  })
+  
+  table.insert( ctrls,
+  {
+    Name = "TeamUpKey",       
+    ControlType = "Indicator",
+    IndicatorType = "Text",   
+    Count = 1,
+    PinStyle = "None",
+    UserPin = false
+  })
+  
+  table.insert( ctrls,
+  {
+    Name = "SiteCode",       
+    ControlType = "Indicator",
+    IndicatorType = "Text",   
+    Count = 1,
+    PinStyle = "None",
+    UserPin = false
+  })
+  
+  table.insert( ctrls,
+  {
+    Name = "EventOpen",       
+    ControlType = "Indicator",
+    IndicatorType = "Text",   
+    Count = 2,
+    PinStyle = "None",
+    UserPin = false
+  })
+  
+  table.insert( ctrls,
+  {
+    Name = "EventClose",       
+    ControlType = "Indicator",
+    IndicatorType = "Text",   
+    Count = 2,
+    PinStyle = "None",
+    UserPin = false
+  })
+  return ctrls
+end
+
+--Layout of controls and graphics for the plugin UI to display
+function GetControlLayout(props)
+  local layout = {}
+  local graphics = {}
+  local CurrentPage = PageNames[props["page_index"].Value]
+  if CurrentPage == "Control" then
+    table.insert(graphics,{
+      Type = "GroupBox",
+      Text = "Control",
+      Fill = {200,200,200},
+      StrokeWidth = 1,
+      Position = {5,5},
+      Size = {200,100}
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Say Hello:",
+      Position = {10,42},
+      Size = {90,16},
+      FontSize = 14,
+      HTextAlign = "Right"
+    })
+    layout["SendButton"] = {
+      PrettyName = "Buttons~Send The Command",
+      Style = "Button",
+      Position = {105,42},
+      Size = {50,16},
+      Color = {0,0,0}
+    }
+  elseif CurrentPage == "Test" then
+    -- TBD
+    table.insert(graphics,{
+      Type = "GroupBox",
+      Text = "Events",
+      Fill = {200,200,200},
+      StrokeWidth = 1,
+      Position = {5,5},
+      Size = {200,100}
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Setup Test:",
+      Position = {10,42},
+      Size = {90,16},
+      FontSize = 14,
+      HTextAlign = "Right"
+    })
+    layout["SiteCode"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {10 , 20},
+      Size = {100,20},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[Time]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = true,
+      ZOrder = 28,
+    }
+    layout["TeamUpKey"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {10 , 40},
+      Size = {100,20},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[Time]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = true,
+      ZOrder = 28,
+    }
+  elseif CurrentPage == "SetupTest" then
+    -- TBD
+    table.insert(graphics,{
+      Type = "GroupBox",
+      Text = "Control",
+      Fill = {200,200,200},
+      StrokeWidth = 1,
+      Position = {5,5},
+      Size = {200,100}
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Setup Test:",
+      Position = {10,42},
+      Size = {90,16},
+      FontSize = 14,
+      HTextAlign = "Right"
+    })
+    layout["SendButton2"] = {
+      PrettyName = "Buttons~Send The Command",
+      Style = "Button",
+      Position = {105,42},
+      Size = {50,16},
+      Color = {0,0,0}
+    }
+  
+  elseif CurrentPage == "Main" then
+    -- TBD
+    table.insert(graphics,{
+      Type = "GroupBox",
+      Text = "Events",
+      Fill = {200,200,200},
+      StrokeWidth = 1,
+      Position = {5,5},
+      Size = {400,200}
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Setup Test:",
+      Position = {10,42},
+      Size = {90,16},
+      FontSize = 14,
+      HTextAlign = "Right"
+    })
+  
+    layout["Time"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {20 , 20},
+      Size = {100,20},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[Time]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = true,
+      ZOrder = 28,
+    }
+  
+    layout["PyekArray"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {70 , 160},
+      Size = {121,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 7,
+    }
+  
+    layout["EventOpen 1"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {40 , 80},
+      Size = {121,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 7,
+    }
+    layout["EventClose 1"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {40 , 100},
+      Size = {121,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 7,
+    }
+  
+    layout["EventOpen 2"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {40 , 120},
+      Size = {121,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 7,
+    }
+    layout["EventClose 2"] = {
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {40 , 140},
+      Size = {121,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 7,
+    }
+  
+  elseif CurrentPage == "About" then
+  
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Build Version: "..PluginInfo.BuildVersion,
+      Position = {5,70},
+      Size = {300,16},
+      FontSize = 14,
+      HTextAlign = "Left"
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Application: "..PluginInfo.Name,
+      Position = {5,10},
+      Size = {300,16},
+      FontSize = 14,
+      HTextAlign = "Left"
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Version: "..PluginInfo.Version,
+      Position = {5,50},
+      Size = {300,16},
+      FontSize = 14,
+      HTextAlign = "Left"
+    })
+    table.insert(graphics,{
+      Type = "Text",
+      Text = "Company: "..PluginInfo.Author,
+      Position = {5,30},
+      Size = {300,16},
+      FontSize = 14,
+      HTextAlign = "Left"
+    })
+  end
+  return layout, graphics
+end
+
+--Start event based logic
+if Controls then
+  status = Controls.status
+  -- Required
+  rapidjson = require("rapidjson")
+  date = require("date")
+  
+  
+  
+  -- Decode Site Var
+  function decodeSiteVar()
+    siteVar = rapidjson.decode(Controls.PyekArray.String)
+    Controls.SiteCode.String = siteVar.site
+    Controls.TeamUpKey.String = siteVar.teamupkey
+    tz = siteVar.timezone
+  end
+  
+  -- CLOCK --
+  CLOCK = Timer.New();
+  CLOCK.EventHandler = function()
+    clock = os.date("%I:%M %p");
+    Controls.Time.String = clock
+    --print(clock)
+  end;
+  CLOCK:Start(1);
+  
+  -- Pull Team Up Events
+  function Upload()
+  
+    HttpClient.Download { Url = "https://api.teamup.com/"..siteVar.teamupuser.."/events?subcalendarId[]="..siteVar.teamupcal, Headers = { ["Teamup-Token"] = siteVar.teamupkey } , Timeout = 30, EventHandler = done }
+    
+  end
+    
+  function statusChange(status, HTTPcode)
+    if HTTPcode == 200 -- OK
+      then status.Value = 0
+    end
+    if HTTPcode == 0 -- Bad URL/Timeout
+      then status.Value = 2
+    end
+    if HTTPcode == 400 -- Invalid Response
+      then status.Value = 1
+    end
+    if HTTPcode == 404 -- Not found
+      then status.Value = 2
+    end
+    if HTTPcode == 403 -- Authentication Error
+      then status.Value = 2
+    end
+    if HTTPcode == 410 -- Channel is archived
+      then status.Value = 2
+    end
+    if HTTPcode == 500 -- Server error, not your problem
+      then status.Value = 2
+    end
+  end
+  
+  
+  function done(tbl, code, data, err, headers)
+    print(string.format( "HTTP response from '%s': Return Code=%i; Error=%s", tbl.Url, code, err or "None" ) )
+    --statusChange(status, code)
+    if code == 200 then   
+      data_tbl = rapidjson.decode(data)
+      print(data)
+  
+      for i,v in pairs(data_tbl.events) do
+        Controls.EventOpen[i].String = (date(v.start_dt) - date(tz)):fmt("%I:%M %p")
+        Controls.EventClose[i].String = (date(v.end_dt) - date(tz)):fmt("%I:%M %p")
+      end
+  
+    end
+  end
+  -- Run Time
+  
+  decodeSiteVar()
+  Upload()
+  -- Event Handlers
+  
+  Controls.PyekArray.EventHandler = decodeSiteVar
+end
+
+
