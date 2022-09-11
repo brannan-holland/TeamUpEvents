@@ -1,6 +1,9 @@
 local CurrentPage = PageNames[props["page_index"].Value]
 if CurrentPage == "Main" then
-  --[[ #include "layout_main.lua" ]]
+
+  
+   
+  --[[ #include "layout_main2.lua" ]]
  
 elseif CurrentPage == "About" then
   --[[ #include "layout_about.lua" ]]

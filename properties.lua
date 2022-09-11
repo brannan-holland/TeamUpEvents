@@ -5,3 +5,11 @@ table.insert(props, {
   Value = "All"
 })
 
+table.insert(props,
+{  
+  Name = "Events",
+  Type = "integer",
+  Min = 1, 
+  Max = 10,
+  Value = 2, 
+})

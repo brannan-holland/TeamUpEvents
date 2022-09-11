@@ -8,6 +8,26 @@ table.insert(graphics,{
 })
 
  
+
+table.insert(graphics,{
+  Type = "Text",
+  Text = "Open Time",
+  Position = {120,60},
+  Size = {100,19},
+  FontSize = 14,
+  HTextAlign = "Center"
+})
+
+table.insert(graphics,{
+  Type = "Text",
+  Text = "Close Time",
+  Position = {220,60},
+  Size = {100,19},
+  FontSize = 14,
+  HTextAlign = "Center"
+})
+
+
  table.insert(graphics,{
     Type = "GroupBox",
     Text = "Events",
@@ -47,6 +67,10 @@ table.insert(graphics,{
     ZOrder = 28,
   }
 
+
+
+
+  
   layout["EventName 1"] = {
     Style = "TextBox",
     TextBoxStyle = "Normal",
@@ -218,21 +242,3 @@ table.insert(graphics,{
 
 
 
-
-  table.insert(graphics,{
-    Type = "Text",
-    Text = "Open Time",
-    Position = {120,60},
-    Size = {100,19},
-    FontSize = 14,
-    HTextAlign = "Center"
-  })
-
-  table.insert(graphics,{
-    Type = "Text",
-    Text = "Close Time",
-    Position = {220,60},
-    Size = {100,19},
-    FontSize = 14,
-    HTextAlign = "Center"
-  })
