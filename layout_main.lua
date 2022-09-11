@@ -2,7 +2,7 @@ Logo = "--[[ #encode "pyek.png" ]]"
 table.insert(graphics,{
   Type="Image",
   Image=Logo,
-  Position={5,5},
+  Position={15,5},
   Size={75,75},
   ZOrder = 1
 })

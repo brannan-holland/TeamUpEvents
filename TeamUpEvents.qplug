@@ -6,7 +6,7 @@
 PluginInfo = {
   Name = "TeamUp Events",
   Version = "0.3",
-  BuildVersion = "0.0.0.100",
+  BuildVersion = "0.0.0.106",
   Id = "a2d21813-c304-45b0-9dac-9913d998ad28",
   Author = "Pyek Group - Brannan Holland",
   Description = "Pulls TeamUp Events - Triggers Events"
@@ -60,11 +60,6 @@ end
 -- Optional function to define pins on the plugin that are not connected to a Control
 function GetPins(props)
   local pins = {}
-  table.insert(pins,{
-    Name = "Audio Output",
-    Direction = "output",
-  }) 
-  
   return pins
 end
 
@@ -79,23 +74,13 @@ end
 -- Optional function to define components used within the plugin
 function GetComponents(props)
   local components = {}
-  table.insert(components,{
-    Name = "main_mixer",
-    Type = "mixer",
-    Properties =   
-    {
-      ["n_inputs"] = 8,
-      ["n_outputs"] = 1,
-    }
-  })
-  
   return components
 end
 
 -- Optional function to define wiring of components used within the plugin
 function GetWiring(props)
   local wiring = {}
-  table.insert( wiring, { "Audio Output", "main_mixer Output 1" } )
+  
   return wiring
 end
 
@@ -181,9 +166,8 @@ function GetControls(props)
         Name = "Output",        
         ControlType = "Text",  
         Count = 1,
-        PinStyle = "None",
+        PinStyle = "Output",
         UserPin = true,
-        PinStyle = "Output"
       })
   
   
@@ -297,7 +281,7 @@ function GetControlLayout(props)
       table.insert(graphics,{
         Type="Image",
         Image=Logo,
-        Position={5,5},
+        Position={15,5},
         Size={75,75},
         ZOrder = 1
       })
@@ -870,11 +854,20 @@ if Controls then
       end
     end
     
+    function clearEvents(i)
+    
+    
+      Controls.EventName[i].String = ""
+      Controls.EventOpen[i].String = ""
+      Controls.EventClose[i].String = ""
+      Controls.EventType[i].String = ""
+    
+      
+      end
     
     function done(tbl, code, data, err, headers)
-      print("Cal: "..siteConfig.teamupcal)
-      print("Key: "..siteConfig.teamupkey)
-      print("User: "..siteConfig.teamupuser)
+      clearEvents(1)
+      clearEvents(2)
       print(string.format( "HTTP response from '%s': Return Code=%i; Error=%s", tbl.Url, code, err or "None" ) )
       --statusChange(status, code)
       if code == 200 then   
@@ -882,10 +875,14 @@ if Controls then
         print(data)
     
         for i,v in pairs(data_tbl.events) do
-          Controls.EventOpen[i].String = (date(v.start_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
-          Controls.EventClose[i].String = (date(v.end_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
-          Controls.EventName[i].String = v.title
-          Controls.EventType[i].String = v.custom.event_type[1]
+          if Controls.EventOpen[1].String ~= nil then
+            Controls.EventOpen[i].String = (date(v.start_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
+            Controls.EventClose[i].String = (date(v.end_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
+            Controls.EventName[i].String = v.title
+            Controls.EventType[i].String = v.custom.event_type[1]
+          else
+            Controls.EventName[1].String = "Closed"
+          end
         end
       if code == 404 then
         print("Cal: "..siteConfig.teamupcal)

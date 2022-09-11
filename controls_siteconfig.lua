@@ -76,7 +76,6 @@ table.insert( ctrls,
   Name = "Output",        
   ControlType = "Text",  
   Count = 1,
-  PinStyle = "None",
+  PinStyle = "Output",
   UserPin = true,
-  PinStyle = "Output"
 })

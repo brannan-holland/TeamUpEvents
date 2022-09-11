@@ -28,11 +28,20 @@ function statusChange(status, HTTPcode)
   end
 end
 
+function clearEvents(i)
+
+
+  Controls.EventName[i].String = ""
+  Controls.EventOpen[i].String = ""
+  Controls.EventClose[i].String = ""
+  Controls.EventType[i].String = ""
+
+  
+  end
 
 function done(tbl, code, data, err, headers)
-  print("Cal: "..siteConfig.teamupcal)
-  print("Key: "..siteConfig.teamupkey)
-  print("User: "..siteConfig.teamupuser)
+  clearEvents(1)
+  clearEvents(2)
   print(string.format( "HTTP response from '%s': Return Code=%i; Error=%s", tbl.Url, code, err or "None" ) )
   --statusChange(status, code)
   if code == 200 then   
@@ -40,10 +49,14 @@ function done(tbl, code, data, err, headers)
     print(data)
 
     for i,v in pairs(data_tbl.events) do
-      Controls.EventOpen[i].String = (date(v.start_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
-      Controls.EventClose[i].String = (date(v.end_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
-      Controls.EventName[i].String = v.title
-      Controls.EventType[i].String = v.custom.event_type[1]
+      if v.start_dt ~= nil then
+        Controls.EventOpen[i].String = (date(v.start_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
+        Controls.EventClose[i].String = (date(v.end_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
+        Controls.EventName[i].String = v.title
+        Controls.EventType[i].String = v.custom.event_type[1]
+      else
+        Controls.EventName[1].String = "Closed"
+      end
     end
   if code == 404 then
     print("Cal: "..siteConfig.teamupcal)
