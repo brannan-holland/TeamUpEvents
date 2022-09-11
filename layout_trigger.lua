@@ -1,13 +1,6 @@
 Logo = "--[[ #encode "pyek.png" ]]"
 
 
-  layout["Run"] = {
-    PrettyName = "Refresh",
-    Style = "Button",
-    Position = {200,20},
-    Size = {50,16},
-    Color = {0,0,0}
-  }
 
   layout["Time"] = {
     Style = "TextBox",
@@ -32,21 +25,92 @@ Logo = "--[[ #encode "pyek.png" ]]"
 
 
 
-evtnum = props["Events"].Value
+local trignum = props["Triggers"].Value
 
 
 layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
-  for i=1,evtnum do
+  for i=1,trignum do
   
-    local ctl_str = tostring(evtnum==1 and "" or " "..i)
+    local ctl_str = tostring(trignum==1 and "" or " "..i)
+
+    layout["Run"] = {
+      PrettyName = "Refresh",
+      Style = "Button",
+      Position = {200,20},
+      Size = {50,16},
+      Color = {0,0,0}
+    }
 
 
-    layout["EventName"..ctl_str] = {
-      PrettyName = string.format("Event %i~Event Name", i),
-      Style = "TextBox",
-      TextBoxStyle = "Normal",
+    layout["TriggerEnable"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Enable", i),
+      Style = "Button",
+
       Position = {20 , 80+20*(i-1)},
-      Size = {100,19},
+      Size = {19,19},
+      Legend = [[]],
+      Color = {50,164,49,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      ZOrder = 7,
+    }
+
+    layout["TriggerActionTime"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Action Time", i),
+      Style = "TextBox",
+      TextBoxStyle = "Normal",
+      Position = {40 , 80+20*(i-1)},
+      Size = {75,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {184,29,19,255},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = true,
+      ZOrder = 7,
+    }
+
+    layout["TriggerOffset"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Offset", i),
+      Style = "Text",
+      TextBoxStyle = "Normal",
+      Position = {140 , 80+20*(i-1)},
+      Size = {75,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 20,
+    }
+
+ 
+
+    layout["TriggerOpenClose"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Open/Close", i),
+      Style = "ComboBox",
+      TextBoxStyle = "Normal",
+      Position = {240 , 80+20*(i-1)},
+      Size = {50,19},
       HTextAlign = "Center",
       FontSize = 12,
       Font = "Roboto",
@@ -63,11 +127,32 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       ZOrder = 7,
     }
 
-    layout["EventOpen"..ctl_str] = {
-      PrettyName = string.format("Event %i~Event Open", i),
+    layout["TriggerEventNo"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Event Number", i),
+      Style = "ComboBox",
+      TextBoxStyle = "Normal",
+      Position = {340 , 80+20*(i-1)},
+      Size = {50,19},
+      HTextAlign = "Center",
+      FontSize = 12,
+      Font = "Roboto",
+      FontStyle="Regular",
+      Legend = [[]],
+      Color = {255,255,255,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      IsReadOnly = false,
+      ZOrder = 7,
+    }
+    layout["TriggerNotes"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Notes", i),
       Style = "TextBox",
       TextBoxStyle = "Normal",
-      Position = {120 , 80+20*(i-1)},
+      Position = {440 , 80+20*(i-1)},
       Size = {100,19},
       HTextAlign = "Center",
       FontSize = 12,
@@ -84,50 +169,8 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       IsReadOnly = false,
       ZOrder = 7,
     }
+    
 
-    layout["EventClose"..ctl_str] = {
-      PrettyName = string.format("Event %i~Event Close", i),
-      Style = "TextBox",
-      TextBoxStyle = "Normal",
-      Position = {220 , 80+20*(i-1)},
-      Size = {100,19},
-      HTextAlign = "Center",
-      FontSize = 12,
-      Font = "Roboto",
-      FontStyle="Regular",
-      Legend = [[]],
-      Color = {255,255,255,255},
-      OffColor = {0,0,0,0},
-      StrokeColor = {105,105,105,255},
-      StrokeWidth = 1,
-      CornerRadius = 0,
-      Padding = 0,
-      Margin = 0,
-      IsReadOnly = false,
-      ZOrder = 7,
-    }
-
-    layout["EventType"..ctl_str] = {
-      PrettyName = string.format("Event %i~Event Type", i),
-      Style = "TextBox",
-      TextBoxStyle = "Normal",
-      Position = {320 , 80+20*(i-1)},
-      Size = {100,19},
-      HTextAlign = "Center",
-      FontSize = 12,
-      Font = "Roboto",
-      FontStyle="Regular",
-      Legend = [[]],
-      Color = {255,255,255,255},
-      OffColor = {0,0,0,0},
-      StrokeColor = {105,105,105,255},
-      StrokeWidth = 1,
-      CornerRadius = 0,
-      Padding = 0,
-      Margin = 0,
-      IsReadOnly = false,
-      ZOrder = 7,
-    }
   end
 
 
@@ -140,7 +183,7 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
     CornerRadius = 8,
     StrokeWidth = 1,
     Position = {5,5},
-    Size = {440,100+20*(evtnum-1)},
+    Size = {440,100+20*(trignum-1)},
     ZOrder = 1
   },
   {

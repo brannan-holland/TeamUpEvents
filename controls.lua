@@ -1,25 +1,9 @@
 
   --[[ #include "controls_siteconfig.lua" ]]
-local ev_count = props["Events"].Value
+  
+  --[[ #include "controls_events.lua" ]]
 
-table.insert(ctrls, {
-  Name = "Run",
-  ControlType = "Button",
-  ButtonType = "Momentary",
-  Count = 1,
-  UserPin = true,
-  PinStyle = "Input",
-  Icon = "Power"
-})
-table.insert(ctrls, {
-  Name = "SendButton2",
-  ControlType = "Button",
-  ButtonType = "Momentary",
-  Count = 1,
-  UserPin = true,
-  PinStyle = "Input",
-  Icon = "Power"
-})
+  --[[ #include "controls_trigger.lua" ]]
 
 
 table.insert( ctrls,
@@ -34,68 +18,11 @@ table.insert( ctrls,
 
 
 
-table.insert( ctrls,
-{
-  Name = "PyekArray",        
-  ControlType = "Text",  
-  Count = 1,
-  UserPin = true,
-  PinStyle = "Input"
-})
 
 
 
 
 
-table.insert( ctrls,
-{
-  Name = "EventOpen",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = ev_count,
-  PinStyle = "Output",
-  UserPin = true
-})
-
-table.insert( ctrls,
-{
-  Name = "EventClose",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = ev_count,
-  PinStyle = "Output",
-  UserPin = true
-})
-
-table.insert( ctrls,
-{
-  Name = "EventName",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = ev_count,
-  PinStyle = "Output",
-  UserPin = true
-})
-
-table.insert( ctrls,
-{
-  Name = "ProCount",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = ev_count,
-  PinStyle = "Output",
-  UserPin = true
-})
-
-table.insert( ctrls,
-{
-  Name = "EventType",       
-  ControlType = "Indicator",
-  IndicatorType = "Text",   
-  Count = ev_count,
-  PinStyle = "Output",
-  UserPin = true
-})
 
 
 

@@ -12,4 +12,7 @@ elseif CurrentPage == "About" then
 elseif CurrentPage == "Site" then
   --[[ #include "layout_siteconfig.lua" ]]
 
+elseif CurrentPage == "Triggers" then
+  --[[ #include "layout_trigger.lua" ]]
+
 end

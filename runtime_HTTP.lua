@@ -1,4 +1,6 @@
 function Upload()
+  clearEvents()
+
 
   HttpClient.Download { Url = "https://api.teamup.com/"..siteConfig.teamupuser.."/events?subcalendarId[]="..siteConfig.teamupcal, Headers = { ["Teamup-Token"] = siteConfig.teamupkey } , Timeout = 30, EventHandler = done }
   
@@ -28,20 +30,21 @@ function statusChange(status, HTTPcode)
   end
 end
 
-function clearEvents(i)
+function clearEvents()
 
-
+  for i in pairs(noEvents) do
+  
   Controls.EventName[i].String = ""
   Controls.EventOpen[i].String = ""
   Controls.EventClose[i].String = ""
   Controls.EventType[i].String = ""
-
-  
   end
+end
 
 function done(tbl, code, data, err, headers)
-  clearEvents(1)
-  clearEvents(2)
+ 
+
+
   print(string.format( "HTTP response from '%s': Return Code=%i; Error=%s", tbl.Url, code, err or "None" ) )
   --statusChange(status, code)
   if code == 200 then   
@@ -52,10 +55,17 @@ function done(tbl, code, data, err, headers)
       if v.start_dt ~= nil then
         Controls.EventOpen[i].String = (date(v.start_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
         Controls.EventClose[i].String = (date(v.end_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
-        Controls.EventName[i].String = v.title
-        Controls.EventType[i].String = v.custom.event_type[1]
+        
       else
         Controls.EventName[1].String = "Closed"
+      end
+
+      if v.custom.event_type ~= nil then
+        Controls.EventType[i].String = v.custom.event_type[1] 
+      end
+
+      if v.title ~= nil then
+        Controls.EventName[i].String = v.title
       end
     end
   if code == 404 then
