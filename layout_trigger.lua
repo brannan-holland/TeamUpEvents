@@ -5,7 +5,7 @@ Logo = "--[[ #encode "pyek.png" ]]"
   layout["Time"] = {
     Style = "TextBox",
     TextBoxStyle = "Normal",
-    Position = {340 , 15},
+    Position = {100 , 15},
     Size = {80,30},
     HTextAlign = "Center",
     FontSize = 16,
@@ -36,17 +36,35 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
     layout["Run"] = {
       PrettyName = "Refresh",
       Style = "Button",
-      Position = {200,20},
-      Size = {50,16},
+      Position = {115,50},
+      Size = {50,20},
       Color = {0,0,0}
     }
+
+    layout["TriggerActionOut"..ctl_str] = {
+      PrettyName = string.format("Trigger %i~Action", i),
+      Style = "LED",
+
+      Position = {11 , 80+20*(i-1)},
+      Size = {19,19},
+      Legend = [[]],
+      Color = {50,164,49,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      ZOrder = 7,
+    }
+
 
 
     layout["TriggerEnable"..ctl_str] = {
       PrettyName = string.format("Trigger %i~Enable", i),
       Style = "Button",
 
-      Position = {20 , 80+20*(i-1)},
+      Position = {30 , 80+20*(i-1)},
       Size = {19,19},
       Legend = [[]],
       Color = {50,164,49,255},
@@ -63,7 +81,7 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       PrettyName = string.format("Trigger %i~Action Time", i),
       Style = "TextBox",
       TextBoxStyle = "Normal",
-      Position = {40 , 80+20*(i-1)},
+      Position = {50 , 80+20*(i-1)},
       Size = {75,19},
       HTextAlign = "Center",
       FontSize = 12,
@@ -85,7 +103,7 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       PrettyName = string.format("Trigger %i~Offset", i),
       Style = "Text",
       TextBoxStyle = "Normal",
-      Position = {140 , 80+20*(i-1)},
+      Position = {125 , 80+20*(i-1)},
       Size = {75,19},
       HTextAlign = "Center",
       FontSize = 12,
@@ -109,8 +127,8 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       PrettyName = string.format("Trigger %i~Open/Close", i),
       Style = "ComboBox",
       TextBoxStyle = "Normal",
-      Position = {240 , 80+20*(i-1)},
-      Size = {50,19},
+      Position = {200 , 80+20*(i-1)},
+      Size = {75,19},
       HTextAlign = "Center",
       FontSize = 12,
       Font = "Roboto",
@@ -131,8 +149,8 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       PrettyName = string.format("Trigger %i~Event Number", i),
       Style = "ComboBox",
       TextBoxStyle = "Normal",
-      Position = {340 , 80+20*(i-1)},
-      Size = {50,19},
+      Position = {275 , 80+20*(i-1)},
+      Size = {75,19},
       HTextAlign = "Center",
       FontSize = 12,
       Font = "Roboto",
@@ -152,8 +170,8 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       PrettyName = string.format("Trigger %i~Notes", i),
       Style = "TextBox",
       TextBoxStyle = "Normal",
-      Position = {440 , 80+20*(i-1)},
-      Size = {100,19},
+      Position = {350 , 80+20*(i-1)},
+      Size = {150,19},
       HTextAlign = "Center",
       FontSize = 12,
       Font = "Roboto",
@@ -183,7 +201,7 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
     CornerRadius = 8,
     StrokeWidth = 1,
     Position = {5,5},
-    Size = {440,100+20*(trignum-1)},
+    Size = {520,100+20*(trignum-1)},
     ZOrder = 1
   },
   {
@@ -203,11 +221,11 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
   },
   {
     Type = "Text",
-    Text = "Close Time",
-    Position = {220,60},
-    Size = {100,19},
-    FontSize = 14,
-    HTextAlign = "Center"
+    Text = "Event Triggers",
+    Position = {200,19},
+    Size = {200,30},
+    FontSize = 20,
+    HTextAlign = "Left"
   }
   
 }

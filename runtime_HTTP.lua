@@ -50,7 +50,8 @@ function done(tbl, code, data, err, headers)
   if code == 200 then   
     data_tbl = rapidjson.decode(data)
     print(data)
-
+    print("Number of Events")
+    print(#data_tbl.events)
     for i,v in pairs(data_tbl.events) do
       if v.start_dt ~= nil then
         Controls.EventOpen[i].String = (date(v.start_dt) - date(siteConfig.timezone)):fmt("%I:%M %p")
@@ -67,6 +68,9 @@ function done(tbl, code, data, err, headers)
       if v.title ~= nil then
         Controls.EventName[i].String = v.title
       end
+      triggerReset()
+      getTriggerTimes()
+     
     end
   if code == 404 then
     print("Cal: "..siteConfig.teamupcal)

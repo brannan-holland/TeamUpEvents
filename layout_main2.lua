@@ -1,34 +1,34 @@
 Logo = "--[[ #encode "pyek.png" ]]"
 
 
-  layout["Run"] = {
-    PrettyName = "Refresh",
-    Style = "Button",
-    Position = {200,20},
-    Size = {50,16},
-    Color = {0,0,0}
-  }
+layout["Run"] = {
+  PrettyName = "Refresh",
+  Style = "Button",
+  Position = {115,50},
+  Size = {50,20},
+  Color = {0,0,0}
+}
 
-  layout["Time"] = {
-    Style = "TextBox",
-    TextBoxStyle = "Normal",
-    Position = {340 , 15},
-    Size = {80,30},
-    HTextAlign = "Center",
-    FontSize = 16,
-    Font = "Roboto",
-    FontStyle="Regular",
-    Legend = [[Time]],
-    Color = {255,255,255,255},
-    OffColor = {0,0,0,0},
-    StrokeColor = {105,105,105,255},
-    StrokeWidth = 2,
-    CornerRadius = 10,
-    Padding = 0,
-    Margin = 0,
-    IsReadOnly = true,
-    ZOrder = 28,
-  }
+layout["Time"] = {
+  Style = "TextBox",
+  TextBoxStyle = "Normal",
+  Position = {100 , 15},
+  Size = {80,30},
+  HTextAlign = "Center",
+  FontSize = 16,
+  Font = "Roboto",
+  FontStyle="Regular",
+  Legend = [[Time]],
+  Color = {255,255,255,255},
+  OffColor = {0,0,0,0},
+  StrokeColor = {105,105,105,255},
+  StrokeWidth = 2,
+  CornerRadius = 10,
+  Padding = 0,
+  Margin = 0,
+  IsReadOnly = true,
+  ZOrder = 28,
+}
 
 
 
@@ -41,6 +41,8 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
     local ctl_str = tostring(evtnum==1 and "" or " "..i)
 
 
+
+    
     layout["EventName"..ctl_str] = {
       PrettyName = string.format("Event %i~Event Name", i),
       Style = "TextBox",
@@ -160,11 +162,11 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
   },
   {
     Type = "Text",
-    Text = "Close Time",
-    Position = {220,60},
-    Size = {100,19},
-    FontSize = 14,
-    HTextAlign = "Center"
+    Text = "TeamUp Events",
+    Position = {200,19},
+    Size = {200,30},
+    FontSize = 20,
+    HTextAlign = "Left"
   }
   
 }
