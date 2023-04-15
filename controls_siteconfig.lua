@@ -73,7 +73,16 @@ table.insert( ctrls,
 
 table.insert( ctrls,
 {
-  Name = "Output",        
+  Name = "SiteArray",        
+  ControlType = "Text",  
+  Count = 1,
+  PinStyle = "Output",
+  UserPin = true,
+})
+
+table.insert( ctrls,
+{
+  Name = "EventArray",        
   ControlType = "Text",  
   Count = 1,
   PinStyle = "Output",
