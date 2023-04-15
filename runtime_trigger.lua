@@ -116,7 +116,7 @@ function getTriggerTimes()
 
 end
 
-getTriggerTimes()
+--getTriggerTimes()
 
 function CompareTimes()
   for i in pairs(triggerCount) do

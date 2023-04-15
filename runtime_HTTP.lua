@@ -49,6 +49,7 @@ function done(tbl, code, data, err, headers)
   --statusChange(status, code)
   if code == 200 then   
     data_tbl = rapidjson.decode(data)
+    
     print(data)
     print("Number of Events")
     print(#data_tbl.events)
