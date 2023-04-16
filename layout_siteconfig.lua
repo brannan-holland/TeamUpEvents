@@ -233,10 +233,31 @@ layout["Output"] = {
   ZOrder = 7,
 }
 
+layout["EventArray"] = {
+  Style = "Text",
+  TextBoxStyle = "Normal",
+  Position = {70 , 180},
+  Size = {121,19},
+  HTextAlign = "Center",
+  FontSize = 12,
+  Font = "Roboto",
+  FontStyle="Regular",
+  Legend = [[]],
+  Color = {255,255,255,255},
+  OffColor = {0,0,0,0},
+  StrokeColor = {105,105,105,255},
+  StrokeWidth = 1,
+  CornerRadius = 0,
+  Padding = 0,
+  Margin = 0,
+  IsReadOnly = false,
+  ZOrder = 7,
+}
+
 layout["SiteSave"] = {
   PrettyName = "Site Save",
   Style = "Button",
-  Position = {105,180},
+  Position = {105,200},
   Size = {50,16},
   Color = {0,0,0}
 }
