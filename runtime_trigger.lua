@@ -1,5 +1,5 @@
 triggerType = {"Open", "Close", "Static", "Disabled"}
-table.insert(eventChoices, "Last Event")
+
 
 
 

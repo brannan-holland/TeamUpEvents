@@ -221,7 +221,7 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
   },
   {
     Type = "Text",
-    Text = "Event Triggers",
+    Text = "Daily Triggers",
     Position = {200,19},
     Size = {200,30},
     FontSize = 20,

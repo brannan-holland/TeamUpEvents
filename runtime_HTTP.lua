@@ -3,7 +3,7 @@ function Upload()
 
 
   HttpClient.Download { Url = "https://api.teamup.com/"..siteConfig.teamupuser.."/events?subcalendarId[]="..siteConfig.teamupcal, Headers = { ["Teamup-Token"] = siteConfig.teamupkey } , Timeout = 30, EventHandler = done }
-  
+ 
 end
   
 function statusChange(status, HTTPcode)
@@ -71,6 +71,9 @@ function done(tbl, code, data, err, headers)
       end
       triggerReset()
       getTriggerTimes()
+      hourltTriggerReset()
+      getHourlyTriggerTimes()
+
      
     end
   if code == 404 then

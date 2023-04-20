@@ -11,6 +11,7 @@ for i=1, ctrlEvents do
 
 end
 
+table.insert(eventChoices, "Last Event")
 
 print(noEvents)
 
@@ -19,5 +20,6 @@ print(noEvents)
 --[[ #include "runtime_HTTP.lua" ]]
 
 --[[ #include "runtime_trigger.lua" ]]
+--[[ #include "runtime_hourlytrigger.lua" ]]
 
 

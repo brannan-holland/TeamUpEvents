@@ -22,3 +22,12 @@ table.insert(props,
   Max = 20,
   Value = 10, 
 })
+
+table.insert(props,
+{  
+  Name = "hourlyTriggers",
+  Type = "integer",
+  Min = 1, 
+  Max = 20,
+  Value = 2, 
+})

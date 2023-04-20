@@ -5,6 +5,9 @@
 
   --[[ #include "controls_trigger.lua" ]]
 
+  
+  --[[ #include "controls_hourlytrigger.lua" ]]
+
 
 table.insert( ctrls,
 {
