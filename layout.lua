@@ -17,4 +17,8 @@ elseif CurrentPage == "Hourly Triggers" then
   --[[ #include "layout_hourlytrigger.lua" ]]
 
 
+elseif CurrentPage == "Subscriptions" then
+  --[[ #include "layout_Subscriptions.lua" ]]
+
+
 end

@@ -21,5 +21,6 @@ print(noEvents)
 
 --[[ #include "runtime_trigger.lua" ]]
 --[[ #include "runtime_hourlytrigger.lua" ]]
+--[[ #include "runtime_Subscriptions.lua" ]]
 
 

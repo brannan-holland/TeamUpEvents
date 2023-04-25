@@ -6,7 +6,7 @@
 PluginInfo = {
   Name = "TeamUp Events/Triggers",
   Version = "1.0",
-  BuildVersion = "1.0.0.116",
+  BuildVersion = "1.0.0.123",
   Id = "a2d21813-c304-45b0-9dac-9913d998ad28",
   Author = "Pyek Group",
   Description = "Pulls TeamUp Events - Triggers Events"
@@ -23,7 +23,7 @@ function GetPrettyName(props)
 end
 
 -- Optional function used if plugin has multiple pages
-PageNames = { "TeamUp", "Daily Triggers","Hourly Triggers" , "Site", "About"  }  --List the pages within the plugin
+PageNames = { "TeamUp", "Daily Triggers","Hourly Triggers" , "Site", "About", "Subscriptions"  }  --List the pages within the plugin
 function GetPages(props)
   local pages = {}
   for ix,name in ipairs(PageNames) do
@@ -543,6 +543,76 @@ function GetControls(props)
       
       })
   
+      
+      
+      table.insert( ctrls,
+      {
+        Name = "subSiteConfigLED",       
+        ControlType = "Indicator",
+        IndicatorType = "LED",   
+        Count = 1,
+        PinStyle = "Output",
+        UserPin = true
+      })
+      
+      table.insert( ctrls,
+      {
+        Name = "subSiteConfigSendID",       
+        ControlType = "Text",
+        IndicatorType = "Text",   
+        Count = 1,
+        PinStyle = "Output",
+        UserPin = true
+      })
+      
+      table.insert( ctrls,
+      {
+        Name = "subSiteConfigSendString",       
+        ControlType = "Text",
+        IndicatorType = "Text",   
+        Count = 1,
+        PinStyle = "Output",
+        UserPin = true
+      })
+      
+      table.insert( ctrls,
+      {
+        Name = "subSiteConfigReceiveID",       
+        ControlType = "Text",
+        IndicatorType = "Text",   
+        Count = 1,
+        PinStyle = "Output",
+        UserPin = true
+      })
+      
+      table.insert( ctrls,
+      {
+        Name = "subSiteConfigReceiveString",       
+        ControlType = "Text",
+        IndicatorType = "Text",   
+        Count = 1,
+        PinStyle = "Output",
+        UserPin = true
+      })
+      
+      table.insert(ctrls, {
+        Name = "subSiteConfigToggle",
+        ControlType = "Button",
+        ButtonType = "Toggle",
+        Count = 1,
+        UserPin = false,
+        PinStyle = "None",
+      
+      })
+      
+      table.insert(ctrls, {
+        Name = "subSiteConfigSend",
+        ControlType = "Button",
+        ButtonType = "Momentary",
+        Count = 1
+      })
+      
+      
   
   table.insert( ctrls,
   {
@@ -1769,6 +1839,164 @@ function GetControlLayout(props)
       }
   
   
+  elseif CurrentPage == "Subscriptions" then
+      layout["subSiteConfigLED"] = {
+        
+        Style = "LED",
+      
+        Position = {20 , 80},
+        Size = {19,19},
+        Legend = [[]],
+        Color = {50,164,49,255},
+        OffColor = {0,0,0,0},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        ZOrder = 7,
+      }
+      
+      layout["subSiteConfigToggle"] = {
+      
+        Style = "Button",
+      
+        Position = {20, 200},
+        Size = {19,19},
+        Legend = [[]],
+        Color = {50,164,49,255},
+        OffColor = {0,0,0,0},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        ZOrder = 7,
+      }
+      
+      layout["subSiteConfigSend"] = {
+      
+        Style = "Button",
+      
+        Position = {20, 220},
+        Size = {19,19},
+        Legend = [[]],
+        Color = {50,164,49,255},
+        OffColor = {0,0,0,0},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        ZOrder = 7,
+      }
+      
+      layout["subSiteConfigSendID"] = {
+        Style = "TextBox",
+        TextBoxStyle = "Normal",
+        Position = {20 , 100,
+        Size = {75,19},
+        HTextAlign = "Center",
+        FontSize = 12,
+        Font = "Roboto",
+        FontStyle="Regular",
+        Legend = [[]],
+        Color = {255,255,255,255},
+        OffColor = {184,29,19,255},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        IsReadOnly = false,
+        ZOrder = 7,
+      }}
+      
+      layout["subSiteConfigSendString"] = {
+        Style = "TextBox",
+        TextBoxStyle = "Normal",
+        Position = {20 , 120,
+        Size = {75,19},
+        HTextAlign = "Center",
+        FontSize = 12,
+        Font = "Roboto",
+        FontStyle="Regular",
+        Legend = [[]],
+        Color = {255,255,255,255},
+        OffColor = {184,29,19,255},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        IsReadOnly = false,
+        ZOrder = 7,
+      }}
+      
+      layout["subSiteConfigReceiveID"] = {
+        Style = "TextBox",
+        TextBoxStyle = "Normal",
+        Position = {20 , 140,
+        Size = {75,19},
+        HTextAlign = "Center",
+        FontSize = 12,
+        Font = "Roboto",
+        FontStyle="Regular",
+        Legend = [[]],
+        Color = {255,255,255,255},
+        OffColor = {184,29,19,255},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        IsReadOnly = false,
+        ZOrder = 7,
+      }}
+      
+      layout["subSiteConfigReceiveString"] = {
+        Style = "TextBox",
+        TextBoxStyle = "Normal",
+        Position = {20 , 160,
+        Size = {75,19},
+        HTextAlign = "Center",
+        FontSize = 12,
+        Font = "Roboto",
+        FontStyle="Regular",
+        Legend = [[]],
+        Color = {255,255,255,255},
+        OffColor = {184,29,19,255},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        IsReadOnly = false,
+        ZOrder = 7,
+      }}
+      
+      layout["subSiteConfigSendID"] = {
+        Style = "TextBox",
+        TextBoxStyle = "Normal",
+        Position = {20 , 180,
+        Size = {75,19},
+        HTextAlign = "Center",
+        FontSize = 12,
+        Font = "Roboto",
+        FontStyle="Regular",
+        Legend = [[]],
+        Color = {255,255,255,255},
+        OffColor = {184,29,19,255},
+        StrokeColor = {105,105,105,255},
+        StrokeWidth = 1,
+        CornerRadius = 0,
+        Padding = 0,
+        Margin = 0,
+        IsReadOnly = false,
+        ZOrder = 7,
+      }}
+  
+  
   end
   return layout, graphics
 end
@@ -2280,6 +2508,67 @@ if Controls then
       v.EventHandler = getHourlyTriggerTimes
     end
     
+    -- Control Aliases
+    subscribed     = Controls.subSiteConfigToggle
+    send           = Controls.subSiteConfigSend
+    transmitId     = Controls.subSiteConfigSendID
+    transmitString = Controls.subSiteConfigSendString
+    incoming       = Controls.subSiteConfigLED
+    receiveId      = Controls.subSiteConfigReceiveID
+    receiveString  = Controls.subSiteConfigReceiveString
+    
+    -- Variables
+    noteid         = ""
+    
+    -- Functions
+    -- Send a notification at the specified transmit id
+    function Send()
+      local transmit = transmitString.String
+      if #transmit > 0 then
+        Notifications.Publish(transmitId.String,transmit)
+      end
+    end
+    
+    -- This function is called whenever a Notification that matches the id is sent from another script
+    function Receive(id,data)
+      receiveString.String = data
+      -- Flash the incoming LED for 1 second
+      incoming.Boolean = true
+      Timer.CallAfter(
+        function()
+          incoming.Boolean = false
+        end,
+        1)
+    end
+    
+    -- This function subscribes to notifications for the specified receive id
+    function Subscribe()
+      local id = receiveId.String
+      local state = subscribed.Boolean
+      if state then -- subscribe when the control is toggled high
+        if #id > 0 then
+          noteid = Notifications.Subscribe(id,Receive)
+        end
+      else          -- unsubscribe when toggled low
+        if noteid ~= nil then
+          Notifications.Unsubscribe(noteid)
+          receiveString.String = ""
+        end
+      end
+    end
+    
+    -- EventHandlers
+    send.EventHandler       = Send
+    receiveId.EventHandler  = Subscribe
+    subscribed.EventHandler = Subscribe
+    
+    -- Initialization
+    function Initialization()
+      if #transmitId.String == 0 then transmitId.String = "Enter ID" end
+      Subscribe()
+    end
+    
+    Initialization()
   
   
 end

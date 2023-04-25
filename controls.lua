@@ -8,6 +8,7 @@
   
   --[[ #include "controls_hourlytrigger.lua" ]]
 
+  --[[ #include "controls_Subscriptions.lua" ]]
 
 table.insert( ctrls,
 {
