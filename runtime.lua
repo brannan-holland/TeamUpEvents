@@ -13,7 +13,7 @@ end
 
 table.insert(eventChoices, "Last Event")
 
-print(noEvents)
+
 
 --[[ #include "runtime_clock.lua" ]]
 --[[ #include "runtime_siteconfig.lua" ]]
@@ -22,5 +22,6 @@ print(noEvents)
 --[[ #include "runtime_trigger.lua" ]]
 --[[ #include "runtime_hourlytrigger.lua" ]]
 --[[ #include "runtime_Subscriptions.lua" ]]
+--[[ #include "runtime_ManualSend.lua" ]]
 
 

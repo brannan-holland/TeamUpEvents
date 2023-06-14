@@ -69,13 +69,14 @@ function done(tbl, code, data, err, headers)
       if v.title ~= nil then
         Controls.EventName[i].String = v.title
       end
-      triggerReset()
-      getTriggerTimes()
-      hourltTriggerReset()
-      getHourlyTriggerTimes()
-
      
     end
+
+    triggerReset()
+    getTriggerTimes()
+    hourltTriggerReset()
+    getHourlyTriggerTimes()
+    
   if code == 404 then
     print("Cal: "..siteConfig.teamupcal)
     print("Key: "..siteConfig.teamupkey)

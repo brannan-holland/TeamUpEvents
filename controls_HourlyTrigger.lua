@@ -197,3 +197,13 @@ table.insert(ctrls, {
   PinStyle = "Input",
 
 })
+
+table.insert(ctrls, {
+  Name = "hourlyTriggerManualSend",
+  ControlType = "Button",
+  ButtonType = "Trigger",
+  Count = ht_count,
+  UserPin = true,
+  PinStyle = "Input",
+
+})

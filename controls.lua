@@ -20,6 +20,16 @@ table.insert( ctrls,
   UserPin = false
 })
 
+table.insert( ctrls,
+{
+  Name = "updateTime",       
+  ControlType = "Text",
+  IndicatorType = "Text",   
+  Count = 1,
+  PinStyle = "None",
+  UserPin = false
+})
+
 
 
 

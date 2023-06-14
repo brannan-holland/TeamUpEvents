@@ -376,6 +376,24 @@ layout["code"] = {Style = "Text",Position = {0,0},Size = {5,5}}
       ZOrder = 7,
     }
 
+
+    layout["hourlyTriggerManualSend"..ctl_str] = {
+      PrettyName = string.format("Hourly Trigger %i~Manual Send", i),
+      Style = "Button",
+
+      Position = {500 , 120+60*(i-1)},
+      Size = {19,19},
+      Legend = [[]],
+      Color = {50,164,49,255},
+      OffColor = {0,0,0,0},
+      StrokeColor = {105,105,105,255},
+      StrokeWidth = 1,
+      CornerRadius = 0,
+      Padding = 0,
+      Margin = 0,
+      ZOrder = 7,
+    }
+
     layout["hourlyTriggerActionTime"..ctl_str] = {
       PrettyName = string.format("Hourly Trigger %i~Action Time", i),
       Style = "TextBox",

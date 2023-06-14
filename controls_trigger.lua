@@ -71,3 +71,13 @@ table.insert(ctrls, {
   PinStyle = "Input",
 
 })
+
+table.insert(ctrls, {
+  Name = "TriggerManualSend",
+  ControlType = "Button",
+  ButtonType = "Trigger",
+  Count = t_count,
+  UserPin = true,
+  PinStyle = "Input",
+
+})

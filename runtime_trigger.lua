@@ -62,6 +62,11 @@ function calculateTrigger(eventType, offset, eventNumber, i)
     return offset
   end
   if eventNumber == "Last Event" then
+    if data_tbl.events[1] == nil then
+
+      return "Closed"
+      
+    end
     eventVarNumber = (#data_tbl.events)
   else
     for i, v in pairs(eventChoices) do
@@ -71,8 +76,7 @@ function calculateTrigger(eventType, offset, eventNumber, i)
   end
 end
 
-print(eventNumber)
-print(eventVarNumber)
+
 
   if Controls.EventOpen[eventVarNumber].String == nil then
     return "Closed"
@@ -108,7 +112,7 @@ end
 
 function getTriggerTimes()
 
-  print("Running Trigger Math")
+  print("Calculating Triggers")
   for v in pairs(triggerCount) do
     Controls.TriggerActionTime[v].String = calculateTrigger(Controls.TriggerOpenClose[v].String, Controls.TriggerOffset[v].String, Controls.TriggerEventNo[v].String, v)
   end
@@ -116,9 +120,17 @@ function getTriggerTimes()
 
 end
 
---getTriggerTimes()
+
 
 function CompareTimes()
+  
+  if Controls.Time.String == Controls.updateTime.String then
+    print("Pulling Todays Events")
+
+    Upload()
+    
+  end
+
   for i in pairs(triggerCount) do
     if Controls.TriggerActionOut[i].Boolean == (Controls.Time.String == Controls.TriggerActionTime[i].String) then
     
@@ -127,6 +139,7 @@ function CompareTimes()
       Controls.TriggerActionOut[i].Boolean = (Controls.Time.String == Controls.TriggerActionTime[i].String)
     end
   end
+
 end
 
 for i,v in ipairs(Controls.TriggerOpenClose) do

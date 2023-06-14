@@ -6,7 +6,7 @@
 PluginInfo = {
   Name = "TeamUp Events/Triggers",
   Version = "1.0",
-  BuildVersion = "1.0.0.123",
+  BuildVersion = "1.1.0.0",
   Id = "a2d21813-c304-45b0-9dac-9913d998ad28",
   Author = "Pyek Group",
   Description = "Pulls TeamUp Events - Triggers Events"
@@ -341,6 +341,16 @@ function GetControls(props)
         PinStyle = "Input",
       
       })
+      
+      table.insert(ctrls, {
+        Name = "TriggerManualSend",
+        ControlType = "Button",
+        ButtonType = "Trigger",
+        Count = t_count,
+        UserPin = true,
+        PinStyle = "Input",
+      
+      })
   
     
       local ht_count = props["hourlyTriggers"].Value
@@ -542,6 +552,16 @@ function GetControls(props)
         PinStyle = "Input",
       
       })
+      
+      table.insert(ctrls, {
+        Name = "hourlyTriggerManualSend",
+        ControlType = "Button",
+        ButtonType = "Trigger",
+        Count = ht_count,
+        UserPin = true,
+        PinStyle = "Input",
+      
+      })
   
       
       
@@ -618,6 +638,16 @@ function GetControls(props)
   {
     Name = "Time",       
     ControlType = "Indicator",
+    IndicatorType = "Text",   
+    Count = 1,
+    PinStyle = "None",
+    UserPin = false
+  })
+  
+  table.insert( ctrls,
+  {
+    Name = "updateTime",       
+    ControlType = "Text",
     IndicatorType = "Text",   
     Count = 1,
     PinStyle = "None",
@@ -850,6 +880,27 @@ function GetControlLayout(props)
           FontSize = 14,
           HTextAlign = "Left"
         })
+      
+        layout["updateTime"] = {
+          Style = "Text",
+          TextBoxStyle = "Normal",
+          Position = {200 , 70},
+          Size = {80,19},
+          HTextAlign = "Center",
+          FontSize = 12,
+          Font = "Roboto",
+          FontStyle="Regular",
+          Legend = [[]],
+          Color = {255,255,255,255},
+          OffColor = {0,0,0,0},
+          StrokeColor = {105,105,105,255},
+          StrokeWidth = 1,
+          CornerRadius = 0,
+          Padding = 0,
+          Margin = 0,
+          IsReadOnly = false,
+          ZOrder = 7,
+        }
   
   
   elseif CurrentPage == "Site" then
@@ -1185,6 +1236,23 @@ function GetControlLayout(props)
             Style = "Button",
       
             Position = {30 , 80+20*(i-1)},
+            Size = {19,19},
+            Legend = [[]],
+            Color = {50,164,49,255},
+            OffColor = {0,0,0,0},
+            StrokeColor = {105,105,105,255},
+            StrokeWidth = 1,
+            CornerRadius = 0,
+            Padding = 0,
+            Margin = 0,
+            ZOrder = 7,
+          }
+      
+          layout["TriggerManualSend"..ctl_str] = {
+            PrettyName = string.format("Trigger %i~Manual Send", i),
+            Style = "Button",
+      
+            Position = {500 , 80+20*(i-1)},
             Size = {19,19},
             Legend = [[]],
             Color = {50,164,49,255},
@@ -1729,6 +1797,24 @@ function GetControlLayout(props)
             ZOrder = 7,
           }
       
+      
+          layout["hourlyTriggerManualSend"..ctl_str] = {
+            PrettyName = string.format("Hourly Trigger %i~Manual Send", i),
+            Style = "Button",
+      
+            Position = {500 , 120+60*(i-1)},
+            Size = {19,19},
+            Legend = [[]],
+            Color = {50,164,49,255},
+            OffColor = {0,0,0,0},
+            StrokeColor = {105,105,105,255},
+            StrokeWidth = 1,
+            CornerRadius = 0,
+            Padding = 0,
+            Margin = 0,
+            ZOrder = 7,
+          }
+      
           layout["hourlyTriggerActionTime"..ctl_str] = {
             PrettyName = string.format("Hourly Trigger %i~Action Time", i),
             Style = "TextBox",
@@ -2018,21 +2104,34 @@ if Controls then
   
   table.insert(eventChoices, "Last Event")
   
-  print(noEvents)
+  
   
     CLOCK = Timer.New();
     CLOCK.EventHandler = function()
       clock = os.date("%I:%M %p");
-      Controls.Time.String = clock
-      CompareTimes()
-      hourlyCompareTimes()
+      storedTime()
       --print(clock)
     end;
     CLOCK:Start(1);
+    
+    
+    
+    
+    function storedTime()
+      if Controls.Time.String ~= clock then
+    
+        print("The time is now "..clock)
+    
+        Controls.Time.String = clock
+        CompareTimes()
+        hourlyCompareTimes()
+        
+      end
+    end
     function siteSave()
       siteConfig = {teamupcal= Controls.TeamUpCal.String, teamupuser= Controls.TeamUpURL.String, timezone= Controls.TimeZone.String, teamupkey= Controls.TeamUpKey.String, attURL= Controls.TeamsNotificationURL.String, site= Controls.SiteCode.String, mobarourl= Controls.MobaroURL.String}
-      print("Saved")
-     print(rapidjson.encode(siteConfig))
+      print("Config Saved")
+     
      Controls.Output.String = rapidjson.encode(siteConfig)
     
      --Controls.Output.String= siteConfig
@@ -2114,13 +2213,14 @@ if Controls then
           if v.title ~= nil then
             Controls.EventName[i].String = v.title
           end
-          triggerReset()
-          getTriggerTimes()
-          hourltTriggerReset()
-          getHourlyTriggerTimes()
-    
          
         end
+    
+        triggerReset()
+        getTriggerTimes()
+        hourltTriggerReset()
+        getHourlyTriggerTimes()
+        
       if code == 404 then
         print("Cal: "..siteConfig.teamupcal)
         print("Key: "..siteConfig.teamupkey)
@@ -2196,6 +2296,11 @@ if Controls then
         return offset
       end
       if eventNumber == "Last Event" then
+        if data_tbl.events[1] == nil then
+    
+          return "Closed"
+          
+        end
         eventVarNumber = (#data_tbl.events)
       else
         for i, v in pairs(eventChoices) do
@@ -2205,8 +2310,7 @@ if Controls then
       end
     end
     
-    print(eventNumber)
-    print(eventVarNumber)
+    
     
       if Controls.EventOpen[eventVarNumber].String == nil then
         return "Closed"
@@ -2242,7 +2346,7 @@ if Controls then
     
     function getTriggerTimes()
     
-      print("Running Trigger Math")
+      print("Calculating Triggers")
       for v in pairs(triggerCount) do
         Controls.TriggerActionTime[v].String = calculateTrigger(Controls.TriggerOpenClose[v].String, Controls.TriggerOffset[v].String, Controls.TriggerEventNo[v].String, v)
       end
@@ -2250,9 +2354,17 @@ if Controls then
     
     end
     
-    --getTriggerTimes()
+    
     
     function CompareTimes()
+      
+      if Controls.Time.String == Controls.updateTime.String then
+        print("Pulling Todays Events")
+    
+        Upload()
+        
+      end
+    
       for i in pairs(triggerCount) do
         if Controls.TriggerActionOut[i].Boolean == (Controls.Time.String == Controls.TriggerActionTime[i].String) then
         
@@ -2261,6 +2373,7 @@ if Controls then
           Controls.TriggerActionOut[i].Boolean = (Controls.Time.String == Controls.TriggerActionTime[i].String)
         end
       end
+    
     end
     
     for i,v in ipairs(Controls.TriggerOpenClose) do
@@ -2334,6 +2447,7 @@ if Controls then
      for i in pairs(hourlyTriggerCount) do
       Controls.hourlyTriggerEnableStart[i].Boolean = true
       Controls.hourlyTriggerEnableStop[i].Boolean = true
+      Controls.hourlyTriggerEnable[i].Boolean = false
      end
     end
     
@@ -2359,6 +2473,11 @@ if Controls then
         return offset
       end
       if eventNumber == "Last Event" then
+          if data_tbl.events[1] == nil then
+    
+          return "Closed"
+          
+        end
         hourlyEventVarNumber = (#data_tbl.events)
       else
         for i, v in pairs(eventChoices) do
@@ -2368,8 +2487,7 @@ if Controls then
       end
     end
     
-    --print(eventNumber)
-    print(hourlyEventVarNumber)
+    
       
     
     
@@ -2409,7 +2527,7 @@ if Controls then
     
     function getHourlyTriggerTimes()
     
-      print("Running Hourly Trigger Math")
+      print("Calculating Hourly Triggers")
       for v in pairs(hourlyTriggerCount) do
         Controls.hourlyTriggerActionTimeStart[v].String = calculateHourlyTrigger(Controls.hourlyTriggerOpenCloseStart[v].String, Controls.hourlyTriggerOffsetStart[v].String, Controls.hourlyTriggerEventNoStart[v].String, v, "")
         Controls.hourlyTriggerActionTimeStop[v].String = calculateHourlyTrigger(Controls.hourlyTriggerOpenCloseStop[v].String, Controls.hourlyTriggerOffsetStop[v].String, Controls.hourlyTriggerEventNoStop[v].String, v, "")
@@ -2569,6 +2687,23 @@ if Controls then
     end
     
     Initialization()
+    for i,v in pairs(Controls.TriggerManualSend) do
+    --print("For "..i.." and "..v)
+    Controls.TriggerManualSend[i].EventHandler = function()
+    --print(i, v)
+      Controls.TriggerActionOut[i].Boolean = true
+    
+      Timer.CallAfter(
+        function ()
+    
+          Controls.TriggerActionOut[i].Boolean = false
+          
+        end, 5
+      )
+      
+    end
+    
+    end
   
   
 end

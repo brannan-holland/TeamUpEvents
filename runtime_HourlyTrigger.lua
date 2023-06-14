@@ -55,6 +55,7 @@ function hourltTriggerReset()
  for i in pairs(hourlyTriggerCount) do
   Controls.hourlyTriggerEnableStart[i].Boolean = true
   Controls.hourlyTriggerEnableStop[i].Boolean = true
+  Controls.hourlyTriggerEnable[i].Boolean = false
  end
 end
 
@@ -80,6 +81,11 @@ function calculateHourlyTrigger(eventType, offset, eventNumber, i, switcher)
     return offset
   end
   if eventNumber == "Last Event" then
+      if data_tbl.events[1] == nil then
+
+      return "Closed"
+      
+    end
     hourlyEventVarNumber = (#data_tbl.events)
   else
     for i, v in pairs(eventChoices) do
@@ -89,8 +95,7 @@ function calculateHourlyTrigger(eventType, offset, eventNumber, i, switcher)
   end
 end
 
---print(eventNumber)
-print(hourlyEventVarNumber)
+
   
 
 
@@ -130,7 +135,7 @@ end
 
 function getHourlyTriggerTimes()
 
-  print("Running Hourly Trigger Math")
+  print("Calculating Hourly Triggers")
   for v in pairs(hourlyTriggerCount) do
     Controls.hourlyTriggerActionTimeStart[v].String = calculateHourlyTrigger(Controls.hourlyTriggerOpenCloseStart[v].String, Controls.hourlyTriggerOffsetStart[v].String, Controls.hourlyTriggerEventNoStart[v].String, v, "")
     Controls.hourlyTriggerActionTimeStop[v].String = calculateHourlyTrigger(Controls.hourlyTriggerOpenCloseStop[v].String, Controls.hourlyTriggerOffsetStop[v].String, Controls.hourlyTriggerEventNoStop[v].String, v, "")
