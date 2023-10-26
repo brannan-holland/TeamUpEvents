@@ -24,10 +24,10 @@
                 "reveal": "always"
             },
             "problemMatcher": [],
-            "dependsOn": [ "--" ]
+            "dependsOn": [ "Compile Plugin" ]
         },
         {
-            "label": "--",
+            "label": "Compile Plugin",
             "type": "shell",
             "group": "build",
             "command": "echo Compile Plugin",
@@ -44,10 +44,10 @@
                 "reveal": "always"
             },
             "problemMatcher": [],
-            "dependsOn": [ "-" ]
+            "dependsOn": [ "Version" ]
         },
         {
-            "label": "-",
+            "label": "Version",
             "type": "shell",
             "group": "build",
             "command": "echo Version",
@@ -64,7 +64,7 @@
                 "reveal": "always"
             },
             "problemMatcher": []
-        },
+        }
     ],
     "inputs": [
         {
